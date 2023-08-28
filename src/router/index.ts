@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
         component: Container,
         children: [
             {
-                path: '/home',
+                path: '/',
                 component: Home
             }
         ]
