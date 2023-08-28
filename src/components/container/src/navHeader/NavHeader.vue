@@ -1,8 +1,11 @@
+<!-- 改头部 -->
 <template>
-    <span @click="toggle">
-        <el-icon-expand v-if="collapse"></el-icon-expand>
-        <el-icon-fold v-else></el-icon-fold>
-    </span>
+    <div class="header">
+        <span @click="toggle">
+            <el-icon-expand v-if="collapse"></el-icon-expand>
+            <el-icon-fold v-else></el-icon-fold>
+        </span>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -16,4 +19,12 @@ let toggle = () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.header{
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center; //垂直方向居中
+}
+</style>
