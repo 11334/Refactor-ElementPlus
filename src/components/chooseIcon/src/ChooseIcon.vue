@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 const props = defineProps<{
     // 弹出框的标题  
     title: string,
@@ -16,7 +16,7 @@ const props = defineProps<{
 >()
 
 let dialogVisible = ref<boolean>(props.visible)
-let emits = defineEmits(['update:dialogVisible'])
+let emits = defineEmits(['update:visible'])
 /*
 在这个例子中,defineEmits()的作用主要有:
 1. 定义组件可以emit触发的事件
@@ -33,10 +33,16 @@ let emits = defineEmits(['update:dialogVisible'])
 */
 let handleClick = () => {
     // 需要修改父组件的数据 
-    emits('update:dialogVisible', dialogVisible.value = !dialogVisible.value)
-
-
+    emits('update:visible', !props.visible)
 }
+// 监听visible的变化，只能监听第一次的变化
+watch(() => props.visible, val => { 
+    dialogVisible.value = val
+})
+// 监听组件内部的dialogVisible变化
+watch(() => dialogVisible.value, val => {
+    emits('update:visible',val)
+})
 </script>
 
 <style lang="scss" scoped></style>

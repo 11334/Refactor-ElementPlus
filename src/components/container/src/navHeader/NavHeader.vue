@@ -12,6 +12,13 @@
 let props = defineProps<{
     collapse: boolean
 }>()
+console.log(props);
+
+// defineProps({
+//     collapse: {
+//         type: Boolean
+//     }
+// })
 let emits = defineEmits(['update:collapse'])
 let toggle = () => {
     // 需要修改父组件的数据
