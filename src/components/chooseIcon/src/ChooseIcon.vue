@@ -2,19 +2,21 @@
     <el-button @click="handleClick" type="primary">
         <slot></slot>
     </el-button>
-    <el-dialog :title="title" v-model="dialogVisible">
-        <!-- Object.keys(ElIcons) 表示获得对象ElIcons中所有的键名 -->
-        <div class="container">
-            <div class="item" v-for="(item, index) in Object.keys(ElIcons)" :key="index">
-                <!-- 图标已经全部注册成了全局组件 el-icon-xxx -->
-                <!-- component是vue自带的 is里面写什么 渲染出来就是一个什么标签 -->
-                <div class="text">
-                    <component :is="`el-icon-${toLine(item)}`"></component>
+    <div class="m--choose-icon-dialog-body-height">
+        <el-dialog :title="title" v-model="dialogVisible">
+            <!-- Object.keys(ElIcons) 表示获得对象ElIcons中所有的键名 -->
+            <div class="container">
+                <div class="item" v-for="(item, index) in Object.keys(ElIcons)" :key="index">
+                    <!-- 图标已经全部注册成了全局组件 el-icon-xxx -->
+                    <!-- component是vue自带的 is里面写什么 渲染出来就是一个什么标签 -->
+                    <div class="text">
+                        <component :is="`el-icon-${toLine(item)}`"></component>
+                    </div>
+                    <div class="icon">{{ item }}</div>
                 </div>
-                <div class="icon">{{ item }}</div>
             </div>
-        </div>
-    </el-dialog>
+        </el-dialog>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -81,13 +83,16 @@ watch(() => dialogVisible.value, val => {
     cursor: pointer;
     height: 70px;
 }
-.text{
+
+.text {
     font-size: 14px;
 }
-.icon{
-    flex:1
+
+.icon {
+    flex: 1
 }
-svg{
+
+svg {
     width: 2em;
     height: 2em;
 }
