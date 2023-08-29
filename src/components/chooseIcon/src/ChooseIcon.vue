@@ -2,11 +2,26 @@
     <el-button @click="handleClick" type="primary">
         <slot></slot>
     </el-button>
-    <el-dialog :title="title" v-model="dialogVisible">111</el-dialog>
+    <el-dialog :title="title" v-model="dialogVisible">
+        <!-- Object.keys(ElIcons) 表示获得对象ElIcons中所有的键名 -->
+        <div class="container">
+            <div class="item" v-for="(item, index) in Object.keys(ElIcons)" :key="index">
+                <!-- 图标已经全部注册成了全局组件 el-icon-xxx -->
+                <!-- component是vue自带的 is里面写什么 渲染出来就是一个什么标签 -->
+                <div class="text">
+                    <component :is="`el-icon-${toLine(item)}`"></component>
+                </div>
+                <div class="icon">{{ item }}</div>
+            </div>
+        </div>
+    </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref,watch } from 'vue'
+import { ref, watch } from 'vue'
+// ElIcons 是对象类型的
+import * as ElIcons from '@element-plus/icons-vue'
+import { toLine } from '../../../utils'
 const props = defineProps<{
     // 弹出框的标题  
     title: string,
@@ -36,13 +51,44 @@ let handleClick = () => {
     emits('update:visible', !props.visible)
 }
 // 监听visible的变化，只能监听第一次的变化
-watch(() => props.visible, val => { 
+watch(() => props.visible, val => {
     dialogVisible.value = val
 })
 // 监听组件内部的dialogVisible变化
 watch(() => dialogVisible.value, val => {
-    emits('update:visible',val)
+    emits('update:visible', val)
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+    display: flex;
+    // 垂直方向居中
+    align-items: center;
+    // 换行
+    flex-wrap: wrap;
+}
+
+.item {
+    // 每五个一换行
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    // 垂直方向居中
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    height: 70px;
+}
+.text{
+    font-size: 14px;
+}
+.icon{
+    flex:1
+}
+svg{
+    width: 2em;
+    height: 2em;
+}
+</style>

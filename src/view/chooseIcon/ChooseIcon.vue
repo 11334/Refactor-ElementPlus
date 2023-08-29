@@ -10,6 +10,4 @@ import { ref } from 'vue'
 let visible = ref<boolean>(false)
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
