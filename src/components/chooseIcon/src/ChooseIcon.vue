@@ -6,7 +6,9 @@
         <el-dialog :title="title" v-model="dialogVisible">
             <!-- Object.keys(ElIcons) 表示获得对象ElIcons中所有的键名 -->
             <div class="container">
-                <div class="item" v-for="(item, index) in Object.keys(ElIcons)" :key="index">
+                <div class="item" v-for="(item, index) in Object.keys(ElIcons)" :key="index"
+                    @click="clickItem(item)"
+                >
                     <!-- 图标已经全部注册成了全局组件 el-icon-xxx -->
                     <!-- component是vue自带的 is里面写什么 渲染出来就是一个什么标签 -->
                     <div class="text">
@@ -24,6 +26,7 @@ import { ref, watch } from 'vue'
 // ElIcons 是对象类型的
 import * as ElIcons from '@element-plus/icons-vue'
 import { toLine } from '../../../utils'
+import { useCopy } from '../../../hooks/useCopy'
 const props = defineProps<{
     // 弹出框的标题  
     title: string,
@@ -48,10 +51,18 @@ let emits = defineEmits(['update:visible'])
 在TS中可以利用defineEmits定义事件接口,进行事件数据的校验。
 总之,在这个例子中,defineEmits主要用于定义组件可以触发的事件,进行校验与提高可读性,以及支持TS类型检查。
 */
+// 点击按钮显示出弹出框
 let handleClick = () => {
     // 需要修改父组件的数据 
     emits('update:visible', !props.visible)
 }
+// 点击图标
+let clickItem = (item: string) => { 
+    let text = `<el-icon-${toLine(item)} />`
+    useCopy(text)
+    dialogVisible.value = false
+}
+
 // 监听visible的变化，只能监听第一次的变化
 watch(() => props.visible, val => {
     dialogVisible.value = val
