@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .father{
+            border: 1px solid #f00;
+            overflow: hidden;
+            position: relative;
+        }
+        .son1{
+            width: 200px;
+            left: 0;
+            position: absolute;
+            background-color: #ff0;
+        }
+        .son2{
+            margin: 0 200px;
+            background-color: #f00;
+        }
+        .son3{
+            right: 0;
+            top: 0;
+            width: 200px;
+            position: absolute;
+            background-color: #09f;
+        } */
+        /* 解决父元素margin塌陷问题 */
+        .father {
+            border: 1px solid #f00;
+            overflow: hidden;
+        }
+
+        .son1 {
+            float: left;
+        }
+
+        .son2 {
+            float: left;
+
+        }
+
+        .son3 {
+            float: left;
+        }
+
+        /* .father {
+            display: flex;
+        }
+
+        .son1 {
+            width: 200px;
+            background-color: #ff0;
+        }
+        
+        .son2 {
+            flex:1;
+            background-color: #f00;
+        }
+        
+        .son3 {
+            width: 200px;
+            background-color: #09f;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son1">儿子1</div>
+        <div class="son2">儿子2</div>
+        <div class="son3">儿子3</div>
+    </div>
+</body>
+
+</html>
