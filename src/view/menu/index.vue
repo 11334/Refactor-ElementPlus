@@ -1,5 +1,5 @@
 <template>
-    <m-menu :data="data1"></m-menu>
+    <m-menu :data="data1" defaultActive="1"></m-menu>
 </template>
 
 <script setup lang="ts">
