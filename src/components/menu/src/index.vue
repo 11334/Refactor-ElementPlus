@@ -1,6 +1,6 @@
 <template>
   <!-- v-bind="$attrs" props没有接收的属性都会绑定到这个标签上 该生效的都生效 -->
-  <div style="width:200px;">
+  <div>
     <el-menu :default-active="defaultActive" 
       v-bind="$attrs"
       :router="router">
