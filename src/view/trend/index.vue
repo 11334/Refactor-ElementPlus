@@ -14,8 +14,14 @@
         <!-- 非匿名插槽 slots.default不存在-->
         <!-- <m-trend text="销售业绩"></m-trend> -->
 
-        <m-trend text="销售额" reverseColor upIconColor="#ff0"></m-trend>
-        <m-trend text="营业额" type="down"></m-trend>
+        <!-- <m-trend text="销售额" reverseColor upIconColor="#ff0"></m-trend>
+        <m-trend text="营业额" type="down"></m-trend> -->
+
+        <!-- <m-trend text="营业额" upTextColor="blue"></m-trend>
+        <m-trend text="销售额" downTextColor="red" type="down"></m-trend> -->
+
+        <m-trend upIcon="CaretTop">营业额</m-trend>
+        <m-trend type="down" downIcon="CaretBottom">销售额</m-trend>
     </div>
 </template>
 
