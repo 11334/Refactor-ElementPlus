@@ -1,6 +1,33 @@
 <template>
-  <div>
-    list
+  <div class="m-list-el-tab-pane">
+    <el-tabs>
+      <!-- 展示型数据下标不变可以用index做key值  -->
+      <el-tab-pane v-for="(item, index) in list" :key="index" :label="item.title">
+        <el-scrollbar max-height="300px">
+          <div class="container" v-for="(item1, index1) in item.content" :key="index1">
+            <div v-if="item1.avatar" class="avatar">
+              <el-avatar size="small" :src="item1.avatar" />
+            </div>
+            <div class="content">
+              <div v-if="item1.title" class="title">
+                <div>{{ item1.title }}</div>
+                <el-tag v-if="item1.tag" :type="item1.tagType" size="small">{{ item1.tag }}</el-tag>
+              </div>
+              <div v-if="item1.desc" class="time">{{ item1.desc }}</div>
+              <div v-if="item1.time" class="time">{{ item1.time }}</div>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="a-item" :class="{border:i !== actions.length}" v-for="(action,i) in actions" :key="i">
+              <div class="a-icon" v-if="action.icon">
+                <component :is="`el-icon-${toLine(action.icon)}`"></component>
+              </div>
+              <div class="a-text">{{ action.text }}</div>
+            </div>
+          </div>
+        </el-scrollbar>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -8,6 +35,8 @@
 // 在 Vue 中,PropType 是用来定义组件 props 的类型的
 import { PropType } from 'vue'
 import { ListOptions, ActionOptions } from './types.ts'
+import { toLine } from '../../../utils';
+// import {toLine} from '../../../utils'
 let props = defineProps({
   list: {
     // 列表的内容
@@ -30,15 +59,73 @@ let props = defineProps({
         所以在 prop 类型定义中加上 required: true 主要有两个作用:
         1. 明确该 prop 在使用时是必填项
         2. 如果没有传入就会输出警告提醒
-    */ 
-    required:true
+    */
+    required: true
   },
   // 操作的内容
   actions: {
-    type:Array as PropType<ActionOptions[]>,
-    default: ()=>[] //非必要类型  可以是空数组
+    type: Array as PropType<ActionOptions[]>,
+    default: () => [] //非必要类型  可以是空数组
   }
 })
+console.log(props.list);
+
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background: #e6f6ff;
+  }
+
+  .avatar {
+    flex: 1;
+  }
+
+  .content {
+    flex: 3;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+  }
+}
+
+.actions {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+
+  .a-item {
+    height: 30px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .a-icon {
+      margin-right: 4px;
+      position: relative;
+      top: 2px;
+    }
+  }
+}
+.border{
+  border-right: 1px solid #eee;
+}
+</style>

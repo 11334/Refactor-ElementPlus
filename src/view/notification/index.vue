@@ -13,14 +13,14 @@
 
         <m-notification :value="66">
             <slot>
-                <m-list></m-list>
+                <m-list :list="list" :actions="actions"></m-list>
             </slot>
         </m-notification>
     </div>
 </template>
 
 <script setup lang="ts">
-
+import {list,actions} from './data'
 </script>
 
 <style scoped>

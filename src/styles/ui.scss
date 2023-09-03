@@ -11,3 +11,16 @@
             overflow: scroll;
         }
 }
+//  tab滑块
+.m-list-el-tab-pane{
+    .el-tabs__nav{
+        width: 100%;
+        display: flex;
+    }
+    .el-tabs__nav-scroll{
+        text-align: center;
+    }
+    .el-tabs__item{
+        flex:1
+    }
+}

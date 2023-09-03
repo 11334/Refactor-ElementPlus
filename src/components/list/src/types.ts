@@ -15,7 +15,7 @@ export interface ListItem {
 // 列表
 export interface ListOptions {
     title: string,
-    contant: ListItem[]
+    content: ListItem[]
 }
 // 操作选项
 export interface ActionOptions {
