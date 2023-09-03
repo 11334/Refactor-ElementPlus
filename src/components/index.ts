@@ -2,11 +2,13 @@ import { App } from 'vue'
 import chooseArea from './chooseArea'
 import chooseIcon from './chooseIcon'
 import trend from './trend'
+import notification from './notification'
 // 够造成一个数组
 const components = [
     chooseArea,
     chooseIcon,
-    trend
+    trend,
+    notification
 ]
 
 // 最后use的是这个文件中的组件
