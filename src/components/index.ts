@@ -4,13 +4,15 @@ import chooseIcon from './chooseIcon'
 import trend from './trend'
 import notification from './notification'
 import list from './list'
+import menu from './menu'
 // 够造成一个数组
 const components = [
     chooseArea,
     chooseIcon,
     trend,
     notification,
-    list
+    list,
+    menu
 ]
 
 // 最后use的是这个文件中的组件
