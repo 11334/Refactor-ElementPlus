@@ -1,8 +1,20 @@
 <template>
-    <!-- value显示多少消息 -->
-    <el-badge style="cursor:pointer;" :value="value" :max="max" :is-dot="isDot">
-        <component :is="`el-icon-${toLine(icon)}`"></component>
-    </el-badge>
+    <el-popover
+        placement="bottom"
+        :width="300"
+        trigger="click"
+      >
+      <template #default>
+        <!-- 放自己的插槽 -->
+        <slot></slot>
+      </template>
+        <template #reference>
+           <!-- value显示多少消息 -->
+      <el-badge style="cursor:pointer;" :value="value" :max="max" :is-dot="isDot">
+          <component :is="`el-icon-${toLine(icon)}`"></component>
+      </el-badge>
+        </template>
+    </el-popover>
 </template>
 
 <script setup lang="ts">
