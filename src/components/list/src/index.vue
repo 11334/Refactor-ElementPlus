@@ -4,7 +4,7 @@
       <!-- 展示型数据下标不变可以用index做key值  -->
       <el-tab-pane v-for="(item, index) in list" :key="index" :label="item.title">
         <el-scrollbar max-height="300px">
-          <div class="container" v-for="(item1, index1) in item.content" :key="index1">
+          <div class="container" @click="clickItem(item1, index1)" v-for="(item1, index1) in item.content" :key="index1">
             <div v-if="item1.avatar" class="avatar">
               <el-avatar size="small" :src="item1.avatar" />
             </div>
@@ -18,7 +18,8 @@
             </div>
           </div>
           <div class="actions">
-            <div class="a-item" :class="{border:i !== actions.length}" v-for="(action,i) in actions" :key="i">
+            <div @click="clickAction(action, i)" class="a-item" :class="{ border: i !== actions.length }"
+              v-for="(action, i) in actions" :key="i">
               <div class="a-icon" v-if="action.icon">
                 <component :is="`el-icon-${toLine(action.icon)}`"></component>
               </div>
@@ -34,10 +35,10 @@
 <script setup lang="ts">
 // 在 Vue 中,PropType 是用来定义组件 props 的类型的
 import { PropType } from 'vue'
-import { ListOptions, ActionOptions } from './types.ts'
+import { ListOptions, ActionOptions,ListItem } from './types.ts'
 import { toLine } from '../../../utils';
 // import {toLine} from '../../../utils'
-let props = defineProps({
+defineProps({
   list: {
     // 列表的内容
     /*
@@ -68,8 +69,15 @@ let props = defineProps({
     default: () => [] //非必要类型  可以是空数组
   }
 })
-console.log(props.list);
 
+let emits = defineEmits(['clickItem','clickAction'])
+let clickItem = (item: ListItem, index: number) => {
+  emits('clickItem', {item,index})
+}
+let clickAction = (item: ActionOptions, index: number) => {
+  emits('clickAction', {item,index})
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -110,7 +118,7 @@ console.log(props.list);
   align-items: center;
   border-top: 1px solid #eee;
   padding-top: 12px;
-
+  cursor: pointer;
   .a-item {
     height: 30px;
     flex: 1;
@@ -125,7 +133,8 @@ console.log(props.list);
     }
   }
 }
-.border{
+
+.border {
   border-right: 1px solid #eee;
 }
 </style>

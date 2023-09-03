@@ -13,14 +13,22 @@
 
         <m-notification :value="66">
             <slot>
-                <m-list :list="list" :actions="actions"></m-list>
+                <m-list @clickItem="clickItem" @clickAction="clickAction" :list="list" :actions="actions"></m-list>
             </slot>
         </m-notification>
     </div>
 </template>
 
 <script setup lang="ts">
-import {list,actions} from './data'
+import { list, actions } from './data'
+
+let clickItem = (val:any) => { 
+    console.log(val); 
+}
+let clickAction = (val: any) => { 
+    console.log(val);
+    
+}
 </script>
 
 <style scoped>
