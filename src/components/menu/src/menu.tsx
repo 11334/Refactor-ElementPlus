@@ -1,12 +1,12 @@
 import { PropType, defineComponent } from 'vue'
-import { MenuItem } from './type'
 import { useAttrs } from 'vue'
-import { toLine } from '../../../utils'
+import * as Icon from '@element-plus/icons-vue'
+import './styles/index.scss'
 export default defineComponent({
     props: {
         // 导航菜单的数据
         data: {
-            type: Array as PropType<MenuItem[]>,
+            type: Array as PropType<any[]>,
             required: true
         },
         // 默认选中的菜单
@@ -18,55 +18,78 @@ export default defineComponent({
         router: {
             type: Boolean,
             default: false
-        }
+        },
+        // 键名
+        // 菜单标题的键名
+        name: {
+            type: String,
+            default: 'name'
+        },
+        // 菜单标识的键名
+        index: {
+            type: String,
+            default: 'index'
+        },
+        // 菜单图标的键名
+        icon: {
+            type: String,
+            default: 'icon'
+        },
+        // 子菜单的键名
+        children: {
+            type: String,
+            default: 'children'
+        },
     },
     setup(props, ctx) {
         // 封装一个渲染无限层级菜单的方法
         // 函数会返回一段jsx的代码
-        let renderMenu = (data: MenuItem[]) => { 
-            return data.map((item: MenuItem) => { 
+        let renderMenu = (data: any[]) => {
+            return data.map((item: any) => {
                 // 每个菜单的图标
-                item.i = `el-icon-${toLine(item.icon!)}`
+                item.i = (Icon as any)[item[props.icon!]]
                 // 处理sub-menu的插槽
                 let slots = {
                     // 每个插槽实际上是一个函数
-                    title: () => { 
+                    title: () => {
                         return <>
                             {/* 图标 */}
                             <item.i />
                             {/* 标题 */}
-                            <span>{item.name}</span>
+                            <span>{item[props.name]}</span>
                         </>
                     }
                 }
                 // 递归渲染children
-                if (item.children && item.children.length) { 
+                if (item[props.children!] && item[props.children!].length) {
                     return (
-                        <el-sub-menu index={item.index} v-slots={ slots}>
+                        <el-sub-menu index={item[props.index]} v-slots={slots}>
                             {/* 递归调用renderMenu */}
-                            {renderMenu(item.children) }
+                            {renderMenu(item[props.children!])}
                         </el-sub-menu>
                     )
                 }
                 // 正常渲染普通的菜单
-                return <el-menu-item index={item.index}>
-                    <item.i></item.i>
-                    <span>{ item.name}</span>
-                </el-menu-item>
+                return (
+                    <el-menu-item index={item[props.index]}>
+                        <item.i />
+                        <span>{item[props.name]}</span>
+                    </el-menu-item>
+                )
             })
         }
         let attrs = useAttrs()
         // console.log(attrs);
-        
+
         return () => {
             return (
-                <el-menu style={{ width: '200px' }}
+                <el-menu 
                     default-active={props.defaultActive}
                     router={props.router}
                     {...attrs}
                 >
                     {/* 内容直接调用方法 显示出来 */}
-                    { renderMenu(props.data)}
+                    {renderMenu(props.data)}
                 </el-menu>
             )
         }

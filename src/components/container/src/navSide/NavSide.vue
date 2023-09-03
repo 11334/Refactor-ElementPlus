@@ -88,10 +88,4 @@ let data = [
 </script>
 
 <style lang="scss" scoped>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px; //菜单不收缩的时候宽度是多少
-}
-// .m-menu-vertical-demo:not([class*="--collapse"]) {
-//     width: 200px;
-// }
 </style>

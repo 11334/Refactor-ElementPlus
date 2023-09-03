@@ -1,69 +1,75 @@
 <template>
-    <m-menu :data="data1" defaultActive="1"></m-menu>
-    <m-infinite-menu :data="data2" defaultActive="1"></m-infinite-menu>
-
+    <!-- <m-menu 
+        :data="data1" defaultActive="1"
+        name="a"
+        index="b"
+        icon="c"
+        children="d"
+    ></m-menu> -->
+    <m-infinite-menu :data="data2" defaultActive="1" name="a" index="s" icon="d" children="f">
+    </m-infinite-menu>
 </template>
 
 <script setup lang="ts">
-let data1 = [
-    {
-        name: '导航1',
-        index: '1',
-        icon: 'document'
-    },
-    {
-        name: '导航2',
-        index: '2',
-        icon: 'document'
-    },
-    {
-        name: '导航3',
-        index: '3',
-        icon: 'document',
-        children: [
-            {
-                name: '导航3-1',
-                index: '3-1',
-                icon: 'document',
-            }
-        ]
-    }
-];
+// let data1 = [
+//     {
+//         a: '导航1',
+//         b: '1',
+//         c: 'document'
+//     },
+//     {
+//         a: '导航2',
+//         b: '2',
+//         c: 'document'
+//     },
+//     {
+//         a: '导航3',
+//         b: '3',
+//         c: 'document',
+//         d: [
+//             {
+//                 a: '导航3-1',
+//                 b: '3-1',
+//                 c: 'document',
+//             }
+//         ]
+//     }
+// ];
 let data2 = [
     {
-        name: '导航1',
-        index: '1',
-        icon: 'document'
+        a: '导航1',
+        s: '1',
+        d: 'Document'
     },
     {
-        name: '导航2',
-        index: '2',
-        icon: 'document'
+        a: '导航2',
+        s: '2',
+        d: 'Document'
     },
     {
-        name: '导航3',
-        index: '3',
-        icon: 'document',
-        children: [
+        a: '导航3',
+        s: '3',
+        d: 'Document',
+        f: [
             {
-                name: '导航3-1',
-                index: '3-1',
-                icon: 'document',
-                children: [
+                a: '导航3-1',
+                s: '3-1',
+                d: 'Document',
+                f: [
                     {
-                        name: '导航3-1-1',
-                        index: '3-1-1',
-                        icon: 'document',
-                        children: [
+                        a: '导航3-1-1',
+                        s: '3-1-1',
+                        d: 'Document',
+                        f: [
                             {
-                                name: '导航3-1-1-1',
-                                index: '3-1-1-1',
-                                icon: 'document',
-                                children: [
+                                a: '导航3-1-1-1',
+                                s: '3-1-1-1',
+                                d: 'Document',
+                                f: [
                                     {
-                                        name: '导航3-1-1-1-1',
-                                        index: '3-1-1-1-1',
-                                        icon: 'document',
+                                        a: '导航3-1-1-1-1',
+                                        s: '3-1-1-1-1',
+                                        d: 'Document',
                                     }
                                 ],
                             }
