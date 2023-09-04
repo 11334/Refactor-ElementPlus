@@ -6,6 +6,6 @@ export default {
     // 要么是一个对象，对象里面的属性叫install
     install(app: App) {
         // 注册为全局组件
-        app.component('m-choosetime', chooseTime)
+        app.component('m-choose-time', chooseTime)
     }
 }
