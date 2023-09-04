@@ -34,4 +34,8 @@ let toggle = () => {
     display: flex;
     align-items: center; //垂直方向居中
 }
+svg{
+    width: 1em;
+    height: 1em;
+}
 </style>
