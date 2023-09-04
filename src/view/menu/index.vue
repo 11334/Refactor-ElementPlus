@@ -1,40 +1,41 @@
 <template>
-    <!-- <m-menu 
-        :data="data1" defaultActive="1"
-        name="a"
-        index="b"
-        icon="c"
-        children="d"
-    ></m-menu> -->
-    <m-infinite-menu :data="data2" defaultActive="1" name="a" index="s" icon="d" children="f">
-    </m-infinite-menu>
+    <div style="display: flex;">
+        <div style="flex:1;">
+            <m-menu :data="data1" defaultActive="1" name="a" index="b" icon="c" children="d"></m-menu>
+        </div>
+        <div style="flex:1;">
+            <m-infinite-menu :data="data2" defaultActive="1" name="a" index="s" icon="d" children="f">
+            </m-infinite-menu>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-// let data1 = [
-//     {
-//         a: '导航1',
-//         b: '1',
-//         c: 'document'
-//     },
-//     {
-//         a: '导航2',
-//         b: '2',
-//         c: 'document'
-//     },
-//     {
-//         a: '导航3',
-//         b: '3',
-//         c: 'document',
-//         d: [
-//             {
-//                 a: '导航3-1',
-//                 b: '3-1',
-//                 c: 'document',
-//             }
-//         ]
-//     }
-// ];
+let data1 = [
+    {
+        a: '导航1',
+        b: '1',
+        c: 'document'
+    },
+    {
+        a: '导航2',
+        b: '2',
+        c: 'document'
+    },
+    {
+        a: '导航3',
+        b: '3',
+        c: 'document',
+        d: [
+            {
+                a: '导航3-1',
+                b: '3-1',
+                c: 'document',
+            }
+        ]
+    }
+];
+
 let data2 = [
     {
         a: '导航1',
@@ -82,4 +83,6 @@ let data2 = [
 ]
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+
+</style>

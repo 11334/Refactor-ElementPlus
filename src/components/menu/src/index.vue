@@ -79,6 +79,8 @@ let props = defineProps({
 <style lang="scss" scoped>
 svg{
   margin-right: 4px;
+  width: 1em;
+  height: 1em;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px; //菜单不收缩的时候宽度是多少

@@ -1,7 +1,7 @@
 import { PropType, defineComponent } from 'vue'
 import { useAttrs } from 'vue'
 import * as Icon from '@element-plus/icons-vue'
-import './styles/index.scss'
+import  './styles/menu.scss'
 export default defineComponent({
     props: {
         // 导航菜单的数据
@@ -84,6 +84,7 @@ export default defineComponent({
         return () => {
             return (
                 <el-menu 
+                    className={'el_menu_aaa'}
                     default-active={props.defaultActive}
                     router={props.router}
                     {...attrs}

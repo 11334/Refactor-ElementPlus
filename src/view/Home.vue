@@ -10,4 +10,9 @@
 
 </script>
 
-<style scoped></style>
+<style scoped>
+svg {
+    width: 2em;
+    height: 2em;
+}
+</style>
