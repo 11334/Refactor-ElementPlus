@@ -29,7 +29,7 @@ let dateEndChange = (val: endDateValue) => {
 }
 let startOptions = {
     size: 'small',
-    clearable: false
+    clearable: true
 }
 </script>
 
