@@ -6,6 +6,7 @@ import notification from './notification'
 import list from './list'
 import menu from './menu'
 import progress from './progress'
+import chooseTime from './chooseTime'
 // 够造成一个数组
 const components = [
     chooseArea,
@@ -14,7 +15,8 @@ const components = [
     notification,
     list,
     menu,
-    progress
+    progress,
+    chooseTime
 ]
 
 // 最后use的是这个文件中的组件
