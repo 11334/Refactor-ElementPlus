@@ -17,9 +17,11 @@
           </el-radio-group>
         </el-col>
         <el-col :span="15">
-          <el-select style="padding-top: 3px;" v-model="selectValue" filterable placeholder="Select" size='small'>
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select style="padding-top: 3px;" v-model="selectValue" filterable :filter-method="filterMethod"
+            placeholder="请搜索城市" size='small' @change="changeSelect">
+            <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
+          <!-- filterable 是根据  label进行过滤的-->
         </el-col>
       </el-row>
       <template v-if="radioValue === '按城市'">
@@ -70,11 +72,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import city from '../lib/city'
 import type { City } from './type'
 import province from '../lib/province.json'
-import type { Province } from './type'
+// import type { Province } from './type'
 
 // 分发事件
 let emits = defineEmits(['changeCity', 'changeProvince'])
@@ -87,33 +89,18 @@ let visible = ref<boolean>(false)
 let radioValue = ref<string>('按城市')
 // 下拉框的值  搜索下拉框
 let selectValue = ref<string>('')
+// 下拉框显示城市的数据
+let options = ref<City[]>([])
 // 所有的城市数据
 let cities = ref(city.cities)
 // 所有的省份数据
 let provinces = ref(province)
-// 下拉框显示城市的数据
-const options = ref([
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-])
+// 所有的城市数据
+let allCity = ref<City[]>([])
+// 搜索输入框的值
+// let searchValue = ref<string>('')
+
+
 // 点击每个城市
 let clickItem = (item: City) => {
   // 给结果赋值
@@ -137,6 +124,49 @@ let clickChat = (item: string) => {
   console.log(item);
 
 }
+// 自定义搜索过滤
+let filterMethod = (val: string) => {
+  // searchValue.value = val
+  let values = Object.values(cities.value).flat(2)
+  if (val === '') {
+    options.value = values
+  } else {
+    if (radioValue.value === '按城市') {
+      // 中文和拼音一起过滤
+      options.value = values.filter(item => {
+        return item.name.includes(val) || item.spell.includes(val)
+      })
+    } else {
+      // 中文过滤
+      options.value = values.filter(item => {
+        return item.name.includes(val)
+      })
+    }
+  }
+}
+// 监听输入框的值
+// watch(() => searchValue.value, val => {
+//   filterMethod(val)
+// })
+// 下拉框选择
+let changeSelect = (val: number) => {
+  let city = allCity.value.find(item => item.id === val)!
+  result.value = city.name
+  if (radioValue.value === '按城市') {
+    emits('changeCity', city)
+  }
+  else {
+    emits('changeProvince', city.name)
+  }
+}
+onMounted(() => {
+  // 获取下拉框的城市数据
+  // flat(2)数组扁平化
+  let values = Object.values(cities.value).flat(2)
+  options.value = values
+  allCity.value = values
+
+})
 </script>
 
 <style lang="scss" scoped>
