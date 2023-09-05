@@ -13,10 +13,10 @@ export interface FormOptions {
     // 表单的标识
     prop?: string,
     // 表单验证规则
-    rules?: RuleItem,
+    rules?: RuleItem[],
     placeholder?:string,
     // 表单元素特有的属性  暂时给个any类型
-    attrs: {
+    attrs?: {
         clearable?: boolean,
         showPassword?: boolean,
         disabled?:boolean,  
