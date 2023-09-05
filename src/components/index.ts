@@ -9,6 +9,8 @@ import progress from './progress'
 import chooseTime from './chooseTime'
 import chooseDate from './chooseDate'
 import chooseCity from './chooseCity'
+import form from './form'
+
 // 够造成一个数组
 const components = [
     chooseArea,
@@ -20,7 +22,8 @@ const components = [
     progress,
     chooseTime,
     chooseDate,
-    chooseCity
+    chooseCity,
+    form
 ]
 
 // 最后use的是这个文件中的组件

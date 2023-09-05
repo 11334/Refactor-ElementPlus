@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #container {
+            border: 1px solid red;
+            width: 500px;
+            height: 200px;
+            margin: 100px auto;
+            text-align: center;
+            margin-right: 300px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        .s1 {
+            margin-bottom: 20px;
+        }
+
+        .all {
+            display: flex;
+        }
+        img{
+            margin-left: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all">
+        <!-- 图片 -->
+        <img src="./1.png" alt="">
+        <!-- 表单 -->
+        <div id="container">
+            <h2 class="s1">网络环境异常，请验证</h2>
+            <input type="text" id="txt" class="s1">
+            <span id="tips" class="s1"></span>
+            <div id="div1" class="s1"></div>
+            <a href="javascript:;" id="a1" class="s1">看不清，换一个</a>
+            <input type="button" id="bt1" value="确定" class="s1">
+        </div>
+    </div>
+    <!-- 底部链接 -->
+    <div align="center">
+        <span class="span1">网上贸易 尽在阿里巴巴：</span>
+        <a href="https://www.alibaba.com/" class="a">阿里巴巴国际站 </a>|
+        <a href="https://www.1688.com/" class="a">阿里巴巴中国站 </a>|
+        <a href="https://www.taobao.com/" class="a">淘宝网 </a>|
+        <a href="https://www.tmall.com/" class="a">天猫 </a>|
+        <a href="https://ju.m.taobao.com/" class="a">聚划算 </a>|
+        <a href="https://www.etao.com/" class="a">一淘 </a>|
+        <a href="https://www.alimama.com/index.htm" class="a">阿里妈妈 </a>|
+        <a href="https://www.alipay.com/" class="a">支付宝 </a>
+
+    </div>
+</body>
+<script>
+    var div1 = document.getElementById("div1");
+    var a1 = document.getElementById("a1");
+    var txt = document.getElementById("txt");
+    var bt1 = document.getElementById("bt1");
+    var tips = document.getElementById("tips");
+    var yzm;
+    function vCode() {
+        yzm = "";
+        for (var i = 1; i <= 6; i++) {
+            yzm = yzm + Math.ceil(Math.random() * 1000) % 10;
+        }
+        console.log("yzm", yzm);
+        div1.innerText = yzm;
+    }
+    vCode();
+    a1.onclick = vCode;
+    bt1.onclick = function () {
+        if (txt.value === yzm) {
+            location.href = "http://www.tmall.com";
+        } else {
+            tips.innerText = "输入内容数字不相等"
+        }
+    }
+    txt.onfocus = function () {
+        tips.innerText = "";
+        this.value = "";
+    }
+</script>
+
+</html>
