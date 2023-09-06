@@ -30,6 +30,7 @@
 import { FormOptions } from '../../components/form/src/types/types';
 import { ElMessage, ElMessageBox, FormInstance } from 'element-plus';
 
+
 interface Scope { 
   form: FormInstance,
   model:any
@@ -193,6 +194,21 @@ let options: FormOptions[] = [
         trigger: 'blur',
       }
     ],
+  },
+  {
+    type: 'editor',
+    value: '123',
+    prop: 'desc',
+    label: '描述',
+    placeholder:'请输入描述',
+    rules: [
+      {
+        required: true,
+        message: '描述不能为空',
+        trigger: 'blur',
+        
+      }
+    ]
   }
 ]
 

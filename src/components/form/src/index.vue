@@ -1,23 +1,16 @@
 <template>
     <!-- validate-on-rule-change 是否在 rules 属性改变后立即触发一次验证 -->
-    <el-form 
-        ref="form"
-        v-if="model" 
-        :validate-on-rule-change="false" 
-        v-bind="$attrs" 
-        :model="model" 
-        :rules="rules"
-    >
+    <el-form ref="form" v-if="model" :validate-on-rule-change="false" v-bind="$attrs" :model="model" :rules="rules">
         <template v-for="(item, index) in options" :key="index">
 
             <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
                 <!-- component : 表单的什么元素是输入框还是单选按钮还是复选框？  v-model="model[item.prop!] 绑定表单其中一个元素的数据  v-bind="item.attrs" 绑定该表单元素的一些特殊操作比如显示密码、一键清空-->
                 <component v-bind="item.attrs" :is="`el-${item.type}`" v-model="model[item.prop!]"
-                    :placeholder="item.placeholder" v-if="item.type !== 'upload'"></component>
-                <el-upload v-else v-bind="item.uploadAttrs" :on-preview="onPreview" :on-success="onSuccess"
-                    :on-remove="onRemove" :on-error="onError" :on-progress="onProgress" :on-change="onChange"
-                    :before-upload="beforeUpload" :before-remove="beforeRemove" :http-request="httpRequest"
-                    :on-exceed="onExceed">
+                    :placeholder="item.placeholder" v-if="item.type !== 'upload' && item.type !== 'editor'"></component>
+                <el-upload v-if="item.type === 'upload'" v-bind="item.uploadAttrs" :on-preview="onPreview"
+                    :on-success="onSuccess" :on-remove="onRemove" :on-error="onError" :on-progress="onProgress"
+                    :on-change="onChange" :before-upload="beforeUpload" :before-remove="beforeRemove"
+                    :http-request="httpRequest" :on-exceed="onExceed">
                     <!-- 之前做什么项目  做什么模块！模块功能描述怎么做  爱好  其他学习 重在沟通 -->
                     <!-- 项目公司随便编 或者切换城市选一个公司 不查  项目问题:第三方包包名叫啥    toB  toC-->
                     <!-- 八股文   功能实现方案  唠嗑 -->
@@ -26,6 +19,7 @@
                     <!-- 上传提示 -->
                     <slot name="uploadTip"></slot>
                 </el-upload>
+                <div id="editor" v-if="item.type === 'editor'"></div>
             </el-form-item>
 
 
@@ -47,10 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, onMounted, watch } from 'vue';
+import { PropType, ref, onMounted, watch, nextTick } from 'vue';
 import { FormOptions } from './types/types';
 import cloneDeep from 'lodash/cloneDeep'
 import { FormInstance } from 'element-plus';
+import E from 'wangeditor'
 
 let emits = defineEmits(["on-preview", "on-success"
     , "on-remove", "on-error", "on-progress", "on-change"
@@ -64,7 +59,7 @@ let props = defineProps({
     },
     // 用户自定义上传方法
     httpRequest: {
-        type:Function
+        type: Function
     }
 })
 
@@ -86,7 +81,25 @@ let initForm = () => {
             // 将一个对象的prop(唯一标识) 赋值给m和r两个对象当做属性
             // item就是option中一个一个完整的对象
             m[item.prop!] = item.value //m属性名是第n个对象的prop 拿当前对象的value给他赋值  遍历结束会得到 由 所有option对象的value属性(作为m的属性) 组成的对象 m
-            r[item.prop!] = item.rules //r属性名是第n个对象的prop 拿当前对象的rules给他赋值  遍历结束会得到 由 所有option对象的rules属性(作为r的属性) 组成的对象 r        
+            r[item.prop!] = item.rules //r属性名是第n个对象的prop 拿当前对象的rules给他赋值  遍历结束会得到 由 所有option对象的rules属性(作为r的属性) 组成的对象 r  
+            if (item.type === 'editor') {
+                // 初始化富文本
+                // nextTick 能获取到更新之后的DOM
+                nextTick(() => {
+                    if (document.getElementById('editor')) {
+                        const editor = new E('#editor')
+                        editor.config.placeholder = item.placeholder!
+                        editor.create()
+                        // 初始化富文本的内容
+                        editor.txt.html(item.value)
+                        // 输入的过程中持续变更newHtml  带p标签
+                        editor.config.onchange = (newHtml: string) => {
+                            // console.log(newHtml);
+                            model.value[item.prop!] = newHtml
+                        }
+                    }
+                })
+            }
         })
         // map 遍历数组时,回调函数的参数就是数组元素本身,赋值给其他变量只是拷贝了对象的引用,而不是深拷贝对象本身 然而model会双向绑定会修改源对象的值所以在这里要用深拷贝算法 从lodash中使用cloneDeep
         model.value = cloneDeep(m)
@@ -112,7 +125,7 @@ let onSuccess = (response: any, file: File, fileList: FileList) => {
     // 上传图片成功  给表单上传项赋值
     // model: { prop:value}
     let uploadItem = props.options.find(item => item.type === 'upload')
-    model.value[uploadItem!.prop!]={response,file,fileList}
+    model.value[uploadItem!.prop!] = { response, file, fileList }
     emits('on-success', { response, file, fileList })
 }
 let onError = (error: any, file: File, fileList: FileList) => {
