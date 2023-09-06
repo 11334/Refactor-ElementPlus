@@ -10,7 +10,7 @@ let options: FormOptions[] = [
     type: 'input',
     value: '',
     label: '用户名',
-    prop:'username',
+    prop: 'username',
     rules: [
       {
         required: true,
@@ -32,7 +32,7 @@ let options: FormOptions[] = [
     type: 'input',
     value: '',
     label: '密码',
-    prop:'password',
+    prop: 'password',
     rules: [
       {
         required: true,
@@ -51,6 +51,102 @@ let options: FormOptions[] = [
       clearable: true
     }
   },
+  {
+    type: 'select',
+    label: '职位',
+    value: '1',
+    placeholder: '请选择职位',
+    prop: 'role',
+    attrs: {
+      style: {
+        width: '100%',
+      },
+    },
+    rules: [
+      {
+        required: true,
+        message: '职位不能为空',
+        trigger: 'blur',
+      }
+    ],
+    children: [
+      {
+        type: 'option',
+        label: '经理',
+        value: '1'
+      },
+      {
+        type: 'option',
+        label: '主管',
+        value: '2'
+      },
+      {
+        type: 'option',
+        label: '员工',
+        value: '3'
+      },
+    ]
+  },
+  {
+    type: 'checkbox-group',
+    value: [],
+    prop: 'like',
+    label: '爱好',
+    children: [
+      {
+        type: 'checkbox',
+        label: '足球',
+        value: '1',
+      },
+      {
+        type: 'checkbox',
+        label: '篮球',
+        value: '2',
+      },
+      {
+        type: 'checkbox',
+        label: '羽毛球',
+        value: '3',
+      },
+    ],
+    rules: [
+      {
+        required: true,
+        message: '爱好不能为空',
+        trigger: 'blur',
+      }
+    ],
+  },
+  {
+    type: 'radio-group',
+    value: '',
+    prop: 'gender',
+    label: '性别',
+    rules: [
+      {
+        required: true,
+        message: '性别不能为空',
+        trigger: 'blur',
+      }
+    ],
+    children: [
+      {
+        type: 'radio',
+        label: '男',
+        value: 'male',
+      },
+      {
+        type: 'radio',
+        label: '女',
+        value: 'female',
+      },
+      {
+        type: 'radio',
+        label: '保密',
+        value: 'not',
+      },
+    ]
+  }
 
 ]
 </script>
