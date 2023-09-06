@@ -42,13 +42,17 @@ import cloneDeep from 'lodash/cloneDeep'
 
 let emits = defineEmits(["on-preview", "on-success"
     , "on-remove", "on-error", "on-progress", "on-change"
-    , "before-upload", "before-remove", 'on-exceed', "http-request"])
+    , "before-upload", "before-remove", 'on-exceed'])
 
 let props = defineProps({
     // 表单的配置项
     options: {
         type: Array as PropType<FormOptions[]>,
         required: true
+    },
+    // 用户自定义上传方法
+    httpRequest: {
+        type:Function
     }
 })
 
@@ -87,44 +91,33 @@ watch(() => props.options, () => {
 
 // 上传组件的所有方法
 let onPreview = (file: any) => {
-    console.log('onPreview');
     emits('on-preview', file)
 }
 let onRemove = (file: any, fileList: any) => {
-    console.log('onRemove');
     emits('on-remove', { file, fileList })
 }
 let onSuccess = (response: any, file: any, fileList: any) => {
-    console.log('onSuccess');
     emits('on-success', { response, file, fileList })
 }
 let onError = (error: any, file: any, fileList: any) => {
-    console.log('onError');
     emits('on-error', { error, file, fileList })
 }
 let onProgress = (event: any, file: any, fileList: any) => {
-    console.log('onProgress');
     emits('on-progress', { event, file, fileList })
 }
 let onChange = (file: any, fileList: any) => {
-    console.log('onChange');
     emits('on-change', { file, fileList })
 }
 let beforeUpload = (file: any) => {
-    console.log('beforeUpload');
     emits('before-upload', file)
 }
 let beforeRemove = (file: any, fileList: any) => {
-    console.log('beforeRemove');
     emits('before-remove', { file, fileList })
 }
-let onExceed = (file: any, fileList: any) => {
-    console.log('onExceed');
-    emits('on-exceed', { file, fileList })
+let onExceed = (files: any, fileList: any) => {
+    emits('on-exceed', { files, fileList })
 }
-let httpRequest = () => {
-    emits('http-request')
-}
+
 </script>
 
 <style scoped></style>
