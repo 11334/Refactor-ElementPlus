@@ -1,6 +1,13 @@
 <template>
     <!-- validate-on-rule-change 是否在 rules 属性改变后立即触发一次验证 -->
-    <el-form v-if="model" :validate-on-rule-change="false" v-bind="$attrs" :model="model" :rules="rules">
+    <el-form 
+        ref="form"
+        v-if="model" 
+        :validate-on-rule-change="false" 
+        v-bind="$attrs" 
+        :model="model" 
+        :rules="rules"
+    >
         <template v-for="(item, index) in options" :key="index">
 
             <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
@@ -32,6 +39,10 @@
             </el-form-item>
 
         </template>
+        <el-form-item>
+            <!-- 实际上没有办法直接在插槽中触发表单的方法，只能用作用域插槽 获取在这定义的表单实例  通过实例调取表单方法   :form="form" 将form通过作用域插槽分发出去  除了拿到表单实例以外  还要拿到表单的值 :model="model" -->
+            <slot name="action" :form="form" :model="model"></slot>
+        </el-form-item>
     </el-form>
 </template>
 
@@ -39,6 +50,7 @@
 import { PropType, ref, onMounted, watch } from 'vue';
 import { FormOptions } from './types/types';
 import cloneDeep from 'lodash/cloneDeep'
+import { FormInstance } from 'element-plus';
 
 let emits = defineEmits(["on-preview", "on-success"
     , "on-remove", "on-error", "on-progress", "on-change"
@@ -60,7 +72,7 @@ let props = defineProps({
 // :model 为表单数据对象 表示这个表单都提交什么数据
 let model = ref<any>(null)
 let rules = ref<any>(null)
-
+let form = ref<FormInstance | null>()
 // 初始化表单的方法
 let initForm = () => {
     if (props.options && props.options.length) {

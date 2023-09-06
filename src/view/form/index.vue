@@ -18,12 +18,23 @@
         jpg/png files with a size less than 500KB.
       </div>
     </template>
+    <!-- 作用域插槽的作用：子组件能够通过插槽的形式分发数据给父组件 -->
+    <template #action="scope">
+      <el-button type="primary" @click="submitForm(scope)">提交</el-button>
+      <el-button @click="resetForm(scope)">重置</el-button>
+    </template>
   </m-form>
 </template>
 
 <script setup lang="ts">
 import { FormOptions } from '../../components/form/src/types/types';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage, ElMessageBox, FormInstance } from 'element-plus';
+
+interface Scope { 
+  form: FormInstance,
+  model:any
+}
+
 let options: FormOptions[] = [
   {
     type: 'input',
@@ -177,13 +188,29 @@ let options: FormOptions[] = [
     },
     rules: [
       {
-        required: true,
+        required: false,
         message: '文件不能为空',
         trigger: 'blur',
       }
     ],
   }
 ]
+
+// scope是表单实例
+let submitForm = (scope: Scope) => {
+  scope.form.validate((valid) => { 
+    if (valid) { 
+      // 验证成功
+      console.log(scope.model);
+      ElMessage.success('提交成功')
+    } else {
+      ElMessage.error('表单填写有误，请检查')
+    }
+  })
+}
+let resetForm = (scope: Scope) => { 
+  scope.form.resetFields()
+}
 // 两个参数的是分发出来的对象 val
 let handleRemove = (val: any) => {
   console.log('handleRemove');
