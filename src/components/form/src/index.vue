@@ -2,18 +2,35 @@
     <!-- validate-on-rule-change 是否在 rules 属性改变后立即触发一次验证 -->
     <el-form v-if="model" :validate-on-rule-change="false" v-bind="$attrs" :model="model" :rules="rules">
         <template v-for="(item, index) in options" :key="index">
+
             <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
-                <!-- component : 表单的什么元素是输入框还是单选按钮还是复选框？  v-model="model[item.prop!] 绑定表单其中一个元素的数据  v-bind="item.attrs" 绑定该表单元素的一些特殊操作比如显示密码、一键清空
-            -->
-                <component v-bind="item.attrs" :is="`el-${item.type}`" v-model="model[item.prop!]"></component>
+                <!-- component : 表单的什么元素是输入框还是单选按钮还是复选框？  v-model="model[item.prop!] 绑定表单其中一个元素的数据  v-bind="item.attrs" 绑定该表单元素的一些特殊操作比如显示密码、一键清空-->
+                <component v-bind="item.attrs" :is="`el-${item.type}`" v-model="model[item.prop!]"
+                    :placeholder="item.placeholder" v-if="item.type !== 'upload'"></component>
+                <el-upload v-else v-bind="item.uploadAttrs" :on-preview="onPreview" :on-success="onSuccess"
+                    :on-remove="onRemove" :on-error="onError" :on-progress="onProgress" :on-change="onChange"
+                    :before-upload="beforeUpload" :before-remove="beforeRemove" :http-request="httpRequest"
+                    :on-exceed="onExceed">
+                    <!-- 之前做什么项目  做什么模块！模块功能描述怎么做  爱好  其他学习 重在沟通 -->
+                    <!-- 项目公司随便编 或者切换城市选一个公司 不查  项目问题:第三方包包名叫啥    toB  toC-->
+                    <!-- 八股文   功能实现方案  唠嗑 -->
+                    <!-- 上传文件的载体  点击这个区域触发上传操作-->
+                    <slot name="uploadArea"></slot>
+                    <!-- 上传提示 -->
+                    <slot name="uploadTip"></slot>
+                </el-upload>
             </el-form-item>
+
+
             <el-form-item v-if="item.children && item.children.length" :prop="item.prop" :label="item.label">
                 <component :placeholder="item.placeholder" v-bind="item.attrs" :is="`el-${item.type}`"
                     v-model="model[item.prop!]">
                     <component v-for="(child, i) in item.children" :key="i" :label="child.label" :value="child.value"
-                        :is="`el-${child.type}`"></component>
+                        :is="`el-${child.type}`">
+                    </component>
                 </component>
             </el-form-item>
+
         </template>
     </el-form>
 </template>
@@ -22,6 +39,10 @@
 import { PropType, ref, onMounted, watch } from 'vue';
 import { FormOptions } from './types/types';
 import cloneDeep from 'lodash/cloneDeep'
+
+let emits = defineEmits(["on-preview", "on-success"
+    , "on-remove", "on-error", "on-progress", "on-change"
+    , "before-upload", "before-remove", 'on-exceed', "http-request"])
 
 let props = defineProps({
     // 表单的配置项
@@ -63,6 +84,47 @@ onMounted(() => {
 watch(() => props.options, () => {
     initForm()
 }, { deep: true })
+
+// 上传组件的所有方法
+let onPreview = (file: any) => {
+    console.log('onPreview');
+    emits('on-preview', file)
+}
+let onRemove = (file: any, fileList: any) => {
+    console.log('onRemove');
+    emits('on-remove', { file, fileList })
+}
+let onSuccess = (response: any, file: any, fileList: any) => {
+    console.log('onSuccess');
+    emits('on-success', { response, file, fileList })
+}
+let onError = (error: any, file: any, fileList: any) => {
+    console.log('onError');
+    emits('on-error', { error, file, fileList })
+}
+let onProgress = (event: any, file: any, fileList: any) => {
+    console.log('onProgress');
+    emits('on-progress', { event, file, fileList })
+}
+let onChange = (file: any, fileList: any) => {
+    console.log('onChange');
+    emits('on-change', { file, fileList })
+}
+let beforeUpload = (file: any) => {
+    console.log('beforeUpload');
+    emits('before-upload', file)
+}
+let beforeRemove = (file: any, fileList: any) => {
+    console.log('beforeRemove');
+    emits('before-remove', { file, fileList })
+}
+let onExceed = (file: any, fileList: any) => {
+    console.log('onExceed');
+    emits('on-exceed', { file, fileList })
+}
+let httpRequest = () => {
+    emits('http-request')
+}
 </script>
 
 <style scoped></style>
