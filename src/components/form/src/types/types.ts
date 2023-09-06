@@ -2,10 +2,10 @@
 import { CSSProperties } from 'vue'
 import { RuleItem } from "./rule";
 
-import { ValidateFieldsError } from 'async-validator'
-interface Callback {
-    (isValid?: boolean, invalidFields?: ValidateFieldsError): void,
-}
+// import { ValidateFieldsError } from 'async-validator'
+// interface Callback {
+//     (isValid?: boolean, invalidFields?: ValidateFieldsError): void,
+// }
 // async-validator
 // 表单每一项的配置选项
 export interface FormOptions {
@@ -52,28 +52,28 @@ export interface FormOptions {
 }
 
 
-export interface ValidateFieldCallback {
-    (message?: string, invalidFields?: ValidateFieldsError): void,
-}
+// export interface ValidateFieldCallback {
+//     (message?: string, invalidFields?: ValidateFieldsError): void,
+// }
 
-export interface FormInstance {
-    registerLabelWidth(width: number, oldWidth: number): void,
-    deregisterLabelWidth(width: number): void,
-    autoLabelWidth: string | undefined,
-    emit: (evt: string, ...args: any[]) => void,
-    labelSuffix: string,
-    inline?: boolean,
-    model?: Record<string, unknown>,
-    size?: string,
-    showMessage?: boolean,
-    labelPosition?: string,
-    labelWidth?: string,
-    rules?: Record<string, unknown>,
-    statusIcon?: boolean,
-    hideRequiredAsterisk?: boolean,
-    disabled?: boolean,
-    validate: (callback?: Callback) => Promise<boolean>,
-    resetFields: () => void,
-    clearValidate: (props?: string | string[]) => void,
-    validateField: (props: string | string[], cb: ValidateFieldCallback) => void,
-}
+// export interface FormInstance {
+//     registerLabelWidth(width: number, oldWidth: number): void,
+//     deregisterLabelWidth(width: number): void,
+//     autoLabelWidth: string | undefined,
+//     emit: (evt: string, ...args: any[]) => void,
+//     labelSuffix: string,
+//     inline?: boolean,
+//     model?: Record<string, unknown>,
+//     size?: string,
+//     showMessage?: boolean,
+//     labelPosition?: string,
+//     labelWidth?: string,
+//     rules?: Record<string, unknown>,
+//     statusIcon?: boolean,
+//     hideRequiredAsterisk?: boolean,
+//     disabled?: boolean,
+//     validate: (callback?: Callback) => Promise<boolean>,
+//     resetFields: () => void,
+//     clearValidate: (props?: string | string[]) => void,
+//     validateField: (props: string | string[], cb: ValidateFieldCallback) => void,
+// }
