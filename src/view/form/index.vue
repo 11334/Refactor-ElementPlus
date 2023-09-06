@@ -188,7 +188,7 @@ let options: FormOptions[] = [
     },
     rules: [
       {
-        required: false,
+        required: true,
         message: '文件不能为空',
         trigger: 'blur',
       }

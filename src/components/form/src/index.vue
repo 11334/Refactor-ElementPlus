@@ -102,31 +102,35 @@ watch(() => props.options, () => {
 }, { deep: true })
 
 // 上传组件的所有方法
-let onPreview = (file: any) => {
+let onPreview = (file: File) => {
     emits('on-preview', file)
 }
-let onRemove = (file: any, fileList: any) => {
+let onRemove = (file: File, fileList: FileList) => {
     emits('on-remove', { file, fileList })
 }
-let onSuccess = (response: any, file: any, fileList: any) => {
+let onSuccess = (response: any, file: File, fileList: FileList) => {
+    // 上传图片成功  给表单上传项赋值
+    // model: { prop:value}
+    let uploadItem = props.options.find(item => item.type === 'upload')
+    model.value[uploadItem!.prop!]={response,file,fileList}
     emits('on-success', { response, file, fileList })
 }
-let onError = (error: any, file: any, fileList: any) => {
+let onError = (error: any, file: File, fileList: FileList) => {
     emits('on-error', { error, file, fileList })
 }
-let onProgress = (event: any, file: any, fileList: any) => {
+let onProgress = (event: any, file: File, fileList: FileList) => {
     emits('on-progress', { event, file, fileList })
 }
-let onChange = (file: any, fileList: any) => {
+let onChange = (file: File, fileList: FileList) => {
     emits('on-change', { file, fileList })
 }
-let beforeUpload = (file: any) => {
+let beforeUpload = (file: File) => {
     emits('before-upload', file)
 }
-let beforeRemove = (file: any, fileList: any) => {
+let beforeRemove = (file: File, fileList: FileList) => {
     emits('before-remove', { file, fileList })
 }
-let onExceed = (files: any, fileList: any) => {
+let onExceed = (files: File, fileList: FileList) => {
     emits('on-exceed', { files, fileList })
 }
 
