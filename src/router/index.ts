@@ -46,6 +46,10 @@ const routes: RouteRecordRaw[] = [
         path: '/form',
         component: () => import('../view/form/index.vue')
       },
+      {
+        path: '/modalform',
+        component: () => import('../view/modalForm/index.vue')
+      },
     ]
   },
 

@@ -10,7 +10,7 @@ import chooseTime from './chooseTime'
 import chooseDate from './chooseDate'
 import chooseCity from './chooseCity'
 import form from './form'
-
+import modalForm from './modalForm'
 // 够造成一个数组
 const components = [
     chooseArea,
@@ -23,7 +23,8 @@ const components = [
     chooseTime,
     chooseDate,
     chooseCity,
-    form
+    form,
+    modalForm
 ]
 
 // 最后use的是这个文件中的组件
