@@ -1,0 +1,11 @@
+<template>
+    <m-table></m-table>
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style scoped>
+
+</style>
