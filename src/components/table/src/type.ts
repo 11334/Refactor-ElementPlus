@@ -8,5 +8,8 @@ export interface TableOptions {
     // 对齐方式
     align?: 'left' | 'center' | 'right',
     // 自定义列表模板名称
-    slot?: string
+    slot?: string,
+
+    // 是否代表操作项
+    action?:boolean,
 }
