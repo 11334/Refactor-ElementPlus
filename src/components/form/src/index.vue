@@ -111,20 +111,32 @@ let initForm = () => {
 }
 
 // 重置表单的方法
-let resetFields = () => { 
+let resetFields = () => {
     // 重置element-plus的表单   form.value是表单实例
     form.value!.resetFields()
     // 重置富文本编辑器的内容
     // 获取到富文本的配置项
-    if (props.options && props.options.length) { 
-        let editorItem = props.options.find(item=>item.type==='editor')!
+    if (props.options && props.options.length) {
+        let editorItem = props.options.find(item => item.type === 'editor')!
         edit.value.txt.html(editorItem.value)
     }
 }
 
+// 分发表单验证方法
+let validate = () => {
+    //在 Element Plus中,可以直接调用表单组件的 validate 方法来对表单进行验证。
+    // validate 方法定义在表单组件 ElForm 的实例类型 FormInstance 中
+    return form.value!.validate
+}
+// 获取表单数据
+let getFormDate = () => {
+    return model.value
+}
 // 分发重置富文本方法   将子组件的实例和方法暴露出去
 defineExpose({
-    resetFields
+    resetFields,
+    validate,
+    getFormDate
 })
 
 onMounted(() => {
@@ -171,7 +183,7 @@ let onExceed = (files: File, fileList: FileList) => {
 </script>
 
 <style lang="scss" scoped>
-#editor{
+#editor {
     position: relative;
     z-index: 1;
 }
