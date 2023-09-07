@@ -1,5 +1,6 @@
 <template>
   <m-form 
+  ref="form"
     label-width="100px" 
     :options="options"  
     @on-change="handleChange" 
@@ -21,7 +22,7 @@
     <!-- 作用域插槽的作用：子组件能够通过插槽的形式分发数据给父组件 -->
     <template #action="scope">
       <el-button type="primary" @click="submitForm(scope)">提交</el-button>
-      <el-button @click="resetForm(scope)">重置</el-button>
+      <el-button @click="resetForm">重置</el-button>
     </template>
   </m-form>
 </template>
@@ -29,7 +30,7 @@
 <script setup lang="ts">
 import { FormOptions } from '../../components/form/src/types/types';
 import { ElMessage, ElMessageBox, FormInstance } from 'element-plus';
-
+import {ref} from 'vue'
 
 interface Scope { 
   form: FormInstance,
@@ -211,6 +212,7 @@ let options: FormOptions[] = [
     ]
   }
 ]
+let form = ref()
 
 // scope是表单实例
 let submitForm = (scope: Scope) => {
@@ -224,8 +226,9 @@ let submitForm = (scope: Scope) => {
     }
   })
 }
-let resetForm = (scope: Scope) => { 
-  scope.form.resetFields()
+// 重置表单
+let resetForm = () => { 
+  form.value.resetFields()
 }
 // 两个参数的是分发出来的对象 val
 let handleRemove = (val: any) => {

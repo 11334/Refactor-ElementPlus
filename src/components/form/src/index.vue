@@ -68,6 +68,7 @@ let props = defineProps({
 let model = ref<any>(null)
 let rules = ref<any>(null)
 let form = ref<FormInstance | null>()
+let edit = ref()
 // 初始化表单的方法
 let initForm = () => {
     if (props.options && props.options.length) {
@@ -97,6 +98,8 @@ let initForm = () => {
                             // console.log(newHtml);
                             model.value[item.prop!] = newHtml
                         }
+                        // 拿到editor实例
+                        edit.value = editor
                     }
                 })
             }
@@ -106,6 +109,24 @@ let initForm = () => {
         rules.value = cloneDeep(r)
     }
 }
+
+// 重置表单的方法
+let resetFields = () => { 
+    // 重置element-plus的表单   form.value是表单实例
+    form.value!.resetFields()
+    // 重置富文本编辑器的内容
+    // 获取到富文本的配置项
+    if (props.options && props.options.length) { 
+        let editorItem = props.options.find(item=>item.type==='editor')!
+        edit.value.txt.html(editorItem.value)
+    }
+}
+
+// 分发重置富文本方法   将子组件的实例和方法暴露出去
+defineExpose({
+    resetFields
+})
+
 onMounted(() => {
     initForm()
 })
@@ -149,4 +170,9 @@ let onExceed = (files: File, fileList: FileList) => {
 
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#editor{
+    position: relative;
+    z-index: 1;
+}
+</style>
