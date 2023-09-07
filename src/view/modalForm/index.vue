@@ -10,13 +10,17 @@
         :on-change="handleChange"
         :on-success="handleSuccess"
     >
+
+        <!-- 表单组件 -->
         <!--  #footer="{form}" 解构form -->
         <template #footer="{ form }">
-            <el-button @click="cancel">取消</el-button>
+            <el-button @click="cancel(form)">取消</el-button>
             <el-button type="primary" @click="confirm(form)">
                 确认
             </el-button>
         </template>
+
+        <!-- 上传组件 -->
         <template #uploadArea>
             <el-button type="primary">Click to upload</el-button>
         </template>
@@ -25,6 +29,7 @@
                 jpg/png files with a size less than 500KB.
             </div>
         </template>
+
     </m-modal-form>
 </template>
 
@@ -230,7 +235,10 @@ let confirm = (form: any) => {
 }
 // 单击取消
 let cancel = (form: FormInstance) => {
-
+    // form.value = null
+    // 重置表单
+    form.resetFields()
+    visible.value = false
 }
 let handleChange = (val: any) => {
     console.log('onChange');

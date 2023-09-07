@@ -14,7 +14,7 @@
                 </m-form>
             </template>
             <template #footer>
-                <!-- footer是组件自己的插槽   我们应该自定义一个自己的插槽 -->
+                <!-- footer是组件自己的插槽   我们应该自定义一个自己的插槽  返回的是当前组件实例对象-->
                 <slot name="footer" :form="form"></slot>
             </template>
         </el-dialog>
