@@ -1,22 +1,19 @@
 <template>
-    <el-table :data="data">
+    <el-table 
+        :data="data" 
+        v-loading="isLoading"
+        :element-loading-text="elementLoadingText"
+        :element-loading-background="elementLoadingBackground"
+        :element-loading-spinner="elementLoadingSpinner"
+        :element-loading-svg="elementLoadingSvg"
+        :element-loading-svg-view-box="elementLoadingSvgViewBox"
+    >
         <template v-for="(item, index) in tableOptions" :key="index">
             <!-- 不传slot -->
-            <el-table-column 
-                v-if="!item.slot"
-                :label="item.label" 
-                :prop="item.prop" 
-                :align="item.align" 
-                :width="item.width"
-            ></el-table-column>
+            <el-table-column v-if="!item.slot" :label="item.label" :prop="item.prop" :align="item.align"
+                :width="item.width"></el-table-column>
             <!-- 传slot -->
-            <el-table-column 
-                v-else
-                :label="item.label" 
-                :prop="item.prop" 
-                :align="item.align" 
-                :width="item.width"
-            >   
+            <el-table-column v-else :label="item.label" :prop="item.prop" :align="item.align" :width="item.width">
                 <template #default="scope">
                     <slot :name="item.slot" :scope="scope"></slot>
                 </template>
@@ -36,6 +33,8 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { TableOptions } from './type';
+
+
 let props = defineProps({
     // 表格的配置
     options: {
@@ -46,6 +45,26 @@ let props = defineProps({
     data: {
         type: Array as PropType<any[]>,
         required: true,
+    },
+    // 加载文案
+    elementLoadingText: {
+        type:String
+    },
+    // 加载图标名
+    elementLoadingSpinner: {
+        type:String
+    },
+    // 加载背景颜色
+    elementLoadingBackground: {
+        type:String
+    },
+    // 加载svg
+    elementLoadingSvg: {
+        type:String
+    },
+    // 加载svg的配置
+    elementLoadingSvgViewBox: {
+        type:String
     }
 })
 
@@ -53,7 +72,10 @@ let props = defineProps({
 let tableOptions = computed(() => props.options!.filter(item => !item.action))
 
 // 找出操作项的配置
-let actionOptions = computed(() => props.options!.find(item => item.action)) 
+let actionOptions = computed(() => props.options!.find(item => item.action))
+
+// 表格是否在加载中
+let isLoading = computed(() => !props.data || !props.data.length)
 </script>
 
 <style scoped></style>
