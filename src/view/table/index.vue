@@ -1,8 +1,7 @@
 <template>
     <m-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,0.8)"
-        :element-loading-svg="svg"
-        element-loading-svg-view-box="-10, -10, 50, 50"
-    >
+        :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @check="check" @close="close"
+        editIcon="Bottom">
         <template #date="{ scope }">
             <el-icon-timer></el-icon-timer>
             <!-- scope.row -->
@@ -26,6 +25,12 @@
             <el-button size="small" type="primary" @click="edit(scope)">编辑</el-button>
             <el-button size="small" type="danger">删除</el-button>
         </template>
+        <template #editCell="{ scope }">
+            <div style="display:flex;">
+                <el-button size="small" type="primary">确认</el-button>
+                <el-button size="small" type="danger">取消</el-button>
+            </div>
+        </template>
     </m-table>
 </template>
 
@@ -40,31 +45,31 @@ interface TableData {
 }
 
 let tableData = ref<TableData[]>([])
-setTimeout(() => {
-    // 表格数据
-    tableData.value = [
-        {
-            date: '2016-05-03',
-            name: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-            date: '2016-05-02',
-            name: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-            date: '2016-05-04',
-            name: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-            date: '2016-05-01',
-            name: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles',
-        },
-    ]
-}, 3000)
+// setTimeout(() => {
+// 表格数据
+tableData.value = [
+    {
+        date: '2016-05-03',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+        date: '2016-05-02',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+        date: '2016-05-04',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+        date: '2016-05-01',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles',
+    },
+]
+// }, 3000)
 
 const svg = `
         <path class="path" d="
@@ -83,19 +88,21 @@ let options: TableOptions[] = [
         label: '日期',
         prop: 'date',
         align: 'center',
-        slot: 'date'
+        slot: 'date',
+        editable: true
         // width:180
     },
     {
         label: '姓名',
         prop: 'name',
         align: 'center',
-        slot: 'name'
+        slot: 'name',
     },
     {
         label: '地址',
         prop: 'address',
         align: 'center',
+        editable: true
     },
     {
         label: '操作',
@@ -105,8 +112,16 @@ let options: TableOptions[] = [
 ]
 
 let edit = (scope: any) => {
-    console.log(scope);
+    // 可以做需求了
+    console.log('父组件', scope);
+}
 
+let check = (scope: any) => {
+    console.log('父组件', scope);
+
+}
+let close = (scope: any) => {
+    console.log(scope);
 }
 </script>
 

@@ -1,3 +1,4 @@
+// 配置数据的属性类型
 export interface TableOptions { 
     // 表头
     label: string,
@@ -12,4 +13,6 @@ export interface TableOptions {
 
     // 是否代表操作项
     action?:boolean,
+    // 是否是可编辑的单元格
+    editable?:boolean,
 }
