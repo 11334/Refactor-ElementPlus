@@ -40,8 +40,8 @@
 
 <script setup lang="ts">
 import { TableOptions } from '../../components/table/src/type'
-import { ref } from 'vue'
-
+import { ref,onMounted } from 'vue'
+import axios from 'axios'
 interface TableData {
     date: string,
     name: string,
@@ -78,6 +78,23 @@ let tableData = ref<TableData[]>([
 // }, 3000)
 
 let editRowIndex = ref<string>('')
+// 当前是哪一页
+let current = ref<number>(1)
+// 定义总数
+let total = ref<number>(0)
+let pageSize = ref<number>(10)
+onMounted(() => { 
+    axios.post('api/list', {
+        current: current.value,
+        pageSize:pageSize.value
+    }).then((res: any) => {
+        tableData.value = res.data.data.rows
+        total.value = res.data.data.total
+        console.log(res.data)
+    })
+})
+
+
 const svg = `
         <path class="path" d="
             M 30 15
