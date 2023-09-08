@@ -1,7 +1,7 @@
 <template>
     <m-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,0.8)"
-        :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @check="check" @close="close"
-        editIcon="Bottom">
+        :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @confirm="confirm" @cancel="cancel"
+        editIcon="Bottom" isEditRow :editRowIndex="editRowIndex">
         <template #date="{ scope }">
             <el-icon-timer></el-icon-timer>
             <!-- scope.row -->
@@ -25,6 +25,10 @@
             <el-button size="small" type="primary" @click="edit(scope)">编辑</el-button>
             <el-button size="small" type="danger">删除</el-button>
         </template>
+        <template #editRow="{ scope }">
+            <el-button size="small" type="primary">确认</el-button>
+            <el-button size="small" type="danger">取消</el-button>
+        </template>
         <template #editCell="{ scope }">
             <div style="display:flex;">
                 <el-button size="small" type="primary">确认</el-button>
@@ -44,10 +48,7 @@ interface TableData {
     address: string
 }
 
-let tableData = ref<TableData[]>([])
-// setTimeout(() => {
-// 表格数据
-tableData.value = [
+let tableData = ref<TableData[]>([
     {
         date: '2016-05-03',
         name: 'Tom',
@@ -68,9 +69,15 @@ tableData.value = [
         name: 'Tom',
         address: 'No. 189, Grove St, Los Angeles',
     },
-]
+])
+// setTimeout(() => {
+// 表格数据
+// tableData.value = [
+
+// ]
 // }, 3000)
 
+let editRowIndex = ref<string>('')
 const svg = `
         <path class="path" d="
             M 30 15
@@ -113,14 +120,16 @@ let options: TableOptions[] = [
 
 let edit = (scope: any) => {
     // 可以做需求了
-    console.log('父组件', scope);
+    // console.log('父组件', scope);
+    // editRowIndex：点击了哪个按钮的标识，='edit' 针对编辑给的标识 以后点击什么自定义标识名   代表这个按钮做了什么事情
+    editRowIndex.value = 'edit'
 }
 
-let check = (scope: any) => {
+let confirm = (scope: any) => {
     console.log('父组件', scope);
 
 }
-let close = (scope: any) => {
+let cancel = (scope: any) => {
     console.log(scope);
 }
 </script>
