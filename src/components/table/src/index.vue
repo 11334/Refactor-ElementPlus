@@ -8,7 +8,7 @@
             <el-table-column :label="item.label" :prop="item.prop" :align="item.align" :width="item.width">
                 <template #default="scope">
                     <!-- 可操作行 -->
-                    <template v-if="scope.row.isEditRow">
+                    <template v-if="scope.row.rowEdit">
                         <el-input size="small" v-model="scope.row[item.prop]"></el-input>
                     </template>
                     <!-- 不可操作行 -->
@@ -17,7 +17,7 @@
                             <!-- 输入框 -->
                             <div style="display: flex;">
                                 <el-input size="small" v-model="scope.row[item.prop]"></el-input>
-                                <div @click="clickEditCell">
+                                <div @click.stop="clickEditCell">
                                     <!-- $slots.editCell用户可以获得插槽 的name  传插槽出去切记带上  :scope="scope"-->
                                     <slot name="editCell" v-if="$slots.editCell" :scope="scope"></slot>
                                     <div class="icons" v-else>
@@ -32,7 +32,8 @@
                             <slot v-if="item.slot" :name="item.slot" :scope="scope"></slot>
                             <span v-else>{{ scope.row[item.prop] }}</span>
                             <!-- 是否可编辑 -->
-                            <component :is="`el-icon-${toLine(editIcon)}`" class="edit" @click="clickEdit(scope)"
+                            <!-- 这个clickEdit事件 与上面 rowClick 编辑单元格事件产生冒泡-->
+                            <component :is="`el-icon-${toLine(editIcon)}`" class="edit" @click.stop="clickEdit(scope)"
                                 v-if="item.editable"></component>
                         </template>
                     </template>
@@ -47,7 +48,7 @@
             <!-- scope中有每一行  每一列的索引 -->
             <template #default="scope">
                 <!-- 可编辑状态 -->
-                <slot name="editRow" v-if="scope.row.isEditRow"></slot>
+                <slot name="editRow" v-if="scope.row.rowEdit"></slot>
                 <!-- 在自带的插槽中加入自己的插槽  父组件在用的时候可以自定义内容-->
                 <!-- 不可编辑状态 -->
                 <slot name="action" :scope="scope" v-else></slot>
@@ -111,7 +112,7 @@ let props = defineProps({
 })
 
 // 分发事件
-let emits = defineEmits(['confirm', 'cancel'])
+let emits = defineEmits(['confirm', 'cancel','update:editRowIndex'])
 
 // 当前点击的单元格
 let currentEdit = ref<string>('')
@@ -186,12 +187,14 @@ let rowClick = (row: any, column: any) => {
         // 编辑行的操作
         if (props.isEditRow && cloneEditRowIndex.value == props.editRowIndex) {
             // 点击的按钮是做可编辑操作  row代表当前一行的数据
-            row.isEditRow = !row.isEditRow  //能控制显示插槽的显示与否
+            row.rowEdit = !row.rowEdit  //能控制显示插槽的显示与否
             // 重置其他数据的isEditRow
             tableData.value.map(item => {
                 // item就是每一行
-                if (item !== row) item.isEditRow = false  
+                if (item !== row) item.rowEdit = false  
             })
+            // 要重置按钮的标识
+            if(!row.rowEdit) emits('update:editRowIndex','')
         }
     }
 }

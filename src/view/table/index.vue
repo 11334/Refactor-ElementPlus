@@ -1,7 +1,7 @@
 <template>
     <m-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,0.8)"
         :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @confirm="confirm" @cancel="cancel"
-        editIcon="Bottom" isEditRow :editRowIndex="editRowIndex">
+        editIcon="Bottom" isEditRow v-model:editRowIndex="editRowIndex">
         <template #date="{ scope }">
             <el-icon-timer></el-icon-timer>
             <!-- scope.row -->
