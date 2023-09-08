@@ -18,7 +18,7 @@
     "@wangeditor/editor-for-vue": "^5.1.12",
     "async-validator": "^4.2.5",
     "element-plus": "^2.3.12",
-    "fullcalendar": "^6.1.8",
+    "fullcalendar": "^5.11.5",
     "lodash": "^4.17.21",
     "vue": "^3.3.4",
     "vue-router": "^4.0.13",

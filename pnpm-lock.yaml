@@ -33,8 +33,8 @@ dependencies:
     specifier: ^2.3.12
     version: 2.3.12(vue@3.3.4)
   fullcalendar:
-    specifier: ^6.1.8
-    version: 6.1.8
+    specifier: ^5.11.5
+    version: 5.11.5
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -636,32 +636,6 @@ packages:
       '@fullcalendar/core': ~6.1.8
     dependencies:
       '@fullcalendar/core': 6.1.8
-    dev: false
-
-  /@fullcalendar/list@6.1.8(@fullcalendar/core@6.1.8):
-    resolution: {integrity: sha512-10N0T/vCtId1cE3JGLpnbAivWVnaWCCkVO7wmbsyr5Y+I939kr/zq4BUNwBoP/xSFVVxx59FETh3iyA+MkV8Fw==}
-    peerDependencies:
-      '@fullcalendar/core': ~6.1.8
-    dependencies:
-      '@fullcalendar/core': 6.1.8
-    dev: false
-
-  /@fullcalendar/multimonth@6.1.8(@fullcalendar/core@6.1.8):
-    resolution: {integrity: sha512-3F0NlncQTfeE9x5ICxh/M9DaSdY6XjgM1NazY8k+d6ukd1jthHI7vs6j7tXJI9eGUKs3DNNEyzN/LoP06SIyKw==}
-    peerDependencies:
-      '@fullcalendar/core': ~6.1.8
-    dependencies:
-      '@fullcalendar/core': 6.1.8
-      '@fullcalendar/daygrid': 6.1.8(@fullcalendar/core@6.1.8)
-    dev: false
-
-  /@fullcalendar/timegrid@6.1.8(@fullcalendar/core@6.1.8):
-    resolution: {integrity: sha512-3+3KHHCoNcaLs/gQt004hAqICbY5+WAffrZ0ePv+80HFB1OVh8BQ5XXLHSOUbTvXdgtUTcfBHuw9fhO31kt5gA==}
-    peerDependencies:
-      '@fullcalendar/core': ~6.1.8
-    dependencies:
-      '@fullcalendar/core': 6.1.8
-      '@fullcalendar/daygrid': 6.1.8(@fullcalendar/core@6.1.8)
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1707,15 +1681,8 @@ packages:
     dev: true
     optional: true
 
-  /fullcalendar@6.1.8:
-    resolution: {integrity: sha512-cbIdnInHVjj3fWqGgurbRuo8EFViVcEKpI2NZpGkzaqpnvN0p1ifKyQ9qnSGS2bKr7733z8Tv8T+CRXfnEWVmw==}
-    dependencies:
-      '@fullcalendar/core': 6.1.8
-      '@fullcalendar/daygrid': 6.1.8(@fullcalendar/core@6.1.8)
-      '@fullcalendar/interaction': 6.1.8(@fullcalendar/core@6.1.8)
-      '@fullcalendar/list': 6.1.8(@fullcalendar/core@6.1.8)
-      '@fullcalendar/multimonth': 6.1.8(@fullcalendar/core@6.1.8)
-      '@fullcalendar/timegrid': 6.1.8(@fullcalendar/core@6.1.8)
+  /fullcalendar@5.11.5:
+    resolution: {integrity: sha512-eaVD6zOvuFXVpoMKlg2FQAj8e+PcpitBMwlzwRJJr1zOi/dXMYAksx2hLzwtsr93FVUNSSo16xwMTTZz6+prKQ==}
     dev: false
 
   /gensync@1.0.0-beta.2:
