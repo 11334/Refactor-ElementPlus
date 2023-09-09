@@ -9,6 +9,9 @@ import mUI from './components'
 import './mock'
 const app = createApp(App)
 
+for (const [key, component] of Object.entries(Icons)) {
+    app.component(key, component)
+}
 // 全局注册图标  牺牲一点性能
 //  el-icon-xxx
 for (let i in Icons) { 

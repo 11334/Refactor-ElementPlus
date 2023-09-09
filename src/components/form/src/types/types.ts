@@ -20,6 +20,7 @@ export interface FormOptions {
     // 表单验证规则
     rules?: RuleItem[],
     placeholder?: string,
+    prefixIcon?: string
     // 表单元素特有的属性  暂时给个any类型
     attrs?: {
         clearable?: boolean,
